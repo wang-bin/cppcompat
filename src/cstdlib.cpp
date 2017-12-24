@@ -3,7 +3,7 @@
  * Copyright (c) 2017 WangBin <wbsecg1 at gmail.com>
  * MIT License
  */
-#include "cstdlib.hpp"
+#include "cppcompat/cstdlib.hpp"
 
 #ifdef CPP_COMPAT_WINRT
 #include <windows.h>
