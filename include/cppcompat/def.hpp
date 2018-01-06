@@ -8,6 +8,7 @@
 #ifndef CPP_COMPAT_STD
 # define CPP_COMPAT_STD 20
 #endif
+// use CPP_IS_STD instead of __cplusplus because __cplusplus is always 199711 in vc
 #if __cplusplus >= 201707L
 # define CPP_IS_STD 20
 #elif __cplusplus >= 201703L
@@ -17,7 +18,18 @@
 #elif __cplusplus >= 201103L
 # define CPP_IS_STD 11
 #else
-# define CPP_IS_STD 03
+// vc140(vs2015) defines _HAVE_CXX17 (_MSVC_LANG>201402) in yvals.h. _MSVC_LANG is defined since cl 19.00(what about clang/clang-cl? added in e71aa18)
+# if (_MSVC_LANG+0) > 201402L // -std:c++17: 201703, -std:c++latest: 201704
+#   define CPP_IS_STD 17
+# elif (_MSVC_LANG+0) >= 201402L // since vs2015update3  -std:c++14: 201402
+#   define CPP_IS_STD 14
+# elif (_MSC_VER+0) >= 1900 // vs2015 < update3
+#   define CPP_IS_STD 14
+# elif (_MSC_VER+0) >= 1800 // vs2013, no _MSVC_LANG
+#   define CPP_IS_STD 11
+# else
+#   define CPP_IS_STD 03
+# endif
 #endif
 // CPP_EMU_STD(X): emulate std version X if current version is older and requested version is at least X
 #define CPP_EMU_STD(X) ((CPP_IS_STD < X) && (CPP_COMPAT_STD >= X))
@@ -76,7 +88,7 @@
 #  endif
 #endif
 
-#if defined(_MSC_VER) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015?
+#if defined(_MSC_VER) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015. TODO: check clang/clang-cl?
 # ifdef constexpr
 #   define constexpr inline // constexpr implies inline
 # endif
@@ -87,7 +99,7 @@
 #endif //defined(_MSC_VER) && _MSC_VER < 1900
 
 
-#if __cplusplus < 201703L
+#if CPP_IS_STD < 17
 # define constexpr17
 #else
 # define constexpr17 constexpr
