@@ -1,6 +1,6 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
  * MIT License
  */
 #pragma once
@@ -96,6 +96,9 @@
 # ifndef noexcept
 #   define noexcept //keyword, FIXME: operator?
 # endif
+// aligment specifier
+# define alignas(N) __declspec(align(N)) // gcc4.8 clang3.0 vc19. 
+# define alignof(T) __alignof(T) // gcc4.5 clang2.9 vc19. std::alignment_of<T>::value is available in vc18
 #endif //defined(_MSC_VER) && _MSC_VER < 1900
 
 
