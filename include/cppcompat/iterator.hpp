@@ -8,6 +8,7 @@
 #include <iterator>
 
 #if CPP_EMU_STD(14)
+# if !defined(_VC_CRT_MAJOR_VERSION) || (_VC_CRT_MAJOR_VERSION < 12)
 namespace std {
 //std::cbegin,cend,rbegin,rend,crbegin,crend
 template<class C>
@@ -23,15 +24,13 @@ constexpr17 auto cend(const C& c) /*noexcep(noexcept(std::end(c)))*/
     return std::end(c);
 }
 } // namespace std
+# endif //!defined(_MSC_VER) || (_VC_CRT_MAJOR_VERSION < 12)
 #endif // CPP_EMU_STD(14)
 
 #if CPP_EMU_STD(17)
-# ifdef _MSC_VER // check vcrt version instead of _MSC_VER, because stl is defined in crt, and clang supports different combinations of msc version + crt 
-#   include <crtversion.h>
-# endif
-# if !defined(_MSC_VER) || (_VC_CRT_MAJOR_VERSION < 14)
+# if !defined(_VC_CRT_MAJOR_VERSION) || (_VC_CRT_MAJOR_VERSION < 14)
 namespace std {
-template<class C> 
+template<class C>
 constexpr auto size(const C& c) -> decltype(c.size())
 {
     return c.size();

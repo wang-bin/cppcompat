@@ -115,3 +115,6 @@
 # endif
 #endif //WINAPI_FAMILY
 
+#ifdef _MSC_VER // check vcrt version instead of _MSC_VER, because stl is defined in crt, and clang supports different combinations of msc version + crt
+# include <crtversion.h>
+#endif
