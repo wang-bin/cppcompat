@@ -90,7 +90,7 @@
 
 #if defined(_MSC_VER) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015. TODO: check clang/clang-cl?
 # ifdef constexpr
-#   define constexpr inline // constexpr implies inline
+#   undef constexpr
 # endif
 # define constexpr //inline // constexpr implies inline. but we can not declare a var as inline like constexpr
 # ifndef noexcept
