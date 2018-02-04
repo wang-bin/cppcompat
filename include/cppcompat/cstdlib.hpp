@@ -1,6 +1,6 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
  * MIT License
  */
 #pragma once
@@ -9,6 +9,6 @@
 #ifdef CPP_COMPAT_WINRT
 namespace std {
 // no export for now
-char* getenv(const char* env_var); // returned ptr is invalid until get the same env again in the same thread
+char* getenv(const char* env_var); // returned ptr is valid until getting the same env again in the same thread
 } // namespace std
 #endif // CPP_COMPAT_WINRT
