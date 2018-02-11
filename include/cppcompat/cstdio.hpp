@@ -1,13 +1,14 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * https://github.com/wang-bin/cppcompat/blob/master/include/cppcompat/thread_local.hpp
  * MIT License
  */
 #pragma once
 #include "def.hpp"
 #include <cstdio> // ensure _GLIBCXX_CSTDIO is defined
 
-#if (defined(__ANDROID__) || defined(ANDROID)) && !defined(__clang__) && !defined(_GLIBCXX_USE_C99)
+#if (defined(__ANDROID__) || defined(ANDROID)) && !defined(_LIBCPP_ABI_VERSION) && !defined(_GLIBCXX_USE_C99)
 namespace std {
     using ::fprintf;
     using ::printf;
