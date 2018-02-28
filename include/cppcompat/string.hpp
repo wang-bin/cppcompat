@@ -1,9 +1,13 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * https://github.com/wang-bin/cppcompat
  * MIT License
  */
 #pragma once
+#include "def.hpp"
+#include <cstdlib> // strtol
+#include <string>
 
 #if defined(__ANDROID__) || defined(ANDROID)
 #if defined(_GLIBCXX_STRING) && !defined(_GLIBCXX_USE_C99)
@@ -40,8 +44,12 @@ inline string to_string(T t) {
     return cast_to<std::string>::from(t);
 }
 
-static inline int stoi(const std::string& str/*, std::size_t* pos = 0, int base = 10*/) {
-    return cast_to<int>::from(str);
+static inline int stoi(const std::string& str, std::size_t* pos = nullptr, int base = 10) {
+    char* s_end = nullptr;
+    auto v = std::strtol(str.c_str(), &s_end, base);
+    if (pos)
+        *pos = s_end - str.c_str();
+    return v;
 }
 } //namespace std
 #endif // !defined(__clang__) && !defined(_GLIBCXX_USE_C99)

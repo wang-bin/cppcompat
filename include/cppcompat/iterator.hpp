@@ -1,6 +1,7 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * https://github.com/wang-bin/cppcompat
  * MIT License
  */
 #pragma once
