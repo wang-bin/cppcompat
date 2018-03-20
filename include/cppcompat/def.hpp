@@ -90,6 +90,7 @@
 #endif
 
 #if defined(_MSC_VER) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015. TODO: check clang/clang-cl?
+# define __ALLOW_KEYWORD_MACROS // xkeycheck.h
 # ifdef constexpr
 #   undef constexpr
 # endif
