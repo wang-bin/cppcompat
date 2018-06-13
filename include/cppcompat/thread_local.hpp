@@ -94,8 +94,10 @@ public:
 #endif
 #ifdef USE_FLS
         index_ = FlsAlloc(default_exit);
+#if _CPPUNWIND
         if (index_ == FLS_OUT_OF_INDEXES)
             throw std::system_error(GetLastError(), std::system_category(), "FlsAlloc error");
+#endif
 #endif
     }
     //ThreadLocal(const ThreadLocal& t) : ThreadLocal(*t.get()) {}
