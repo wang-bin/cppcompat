@@ -29,7 +29,7 @@ constexpr17 auto cend(const C& c) /*noexcep(noexcept(std::end(c)))*/
 #endif // CPP_EMU_STD(14)
 
 #if CPP_EMU_STD(17)
-# if !defined(_VC_CRT_MAJOR_VERSION) || (_VC_CRT_MAJOR_VERSION < 14)
+# if !defined(_VC_CRT_MAJOR_VERSION) || (_VC_CRT_MAJOR_VERSION < 14) || defined(_LIBCPP_VERSION)
 namespace std {
 template<class C>
 constexpr auto size(const C& c) -> decltype(c.size())
