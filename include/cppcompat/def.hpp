@@ -65,7 +65,7 @@
 
 
 /*
- * C99 __func__ macro
+ * C99 __func__ macro // always not defined?
  */
 #ifndef __func__
 #  if (__STDC_VERSION__ >= 199901L)
@@ -89,8 +89,7 @@
 #  endif
 #endif
 
-#if defined(_MSC_VER) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015. TODO: check clang/clang-cl?
-# define __ALLOW_KEYWORD_MACROS // xkeycheck.h
+#if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015
 # ifdef constexpr
 #   undef constexpr
 # endif
