@@ -73,7 +73,7 @@ using result_of_t = typename result_of<T>::type;
 
 #if CPP_EMU_STD(17)
 namespace std {
-# if __GNUC__ < 5 && !defined __clang__
+# if (__GNUC__+0) < 5 && !defined __clang__
 // http://stackoverflow.com/a/28967049/1353549
 template <typename...>
 struct make_void { using type = void; };
