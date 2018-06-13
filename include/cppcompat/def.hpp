@@ -64,29 +64,14 @@
 // gsl/gsl_util pop_macro("noexcept")
 
 
-/*
- * C99 __func__ macro // always not defined?
- */
-#ifndef __func__
-#  if (__STDC_VERSION__ >= 199901L)
-     /* C99 */
-#  elif defined(__SUNPRO_C) && defined(__C99FEATURES__)
-     /* C99 */
-#  elif defined(__GNUC__)
-#    if __GNUC__ >= 2
-#      define __func__ __FUNCTION__
-#    else
-#      define __func__ "<unknown>"
-#    endif
-#  elif defined(_MSC_VER)
-#    if _MSC_VER >= 1300
-#      define __func__ __FUNCTION__
-#    else
-#      define __func__ "<unknown>"
-#    endif
-#  else
-#    define __func__ "<unknown>"
-#  endif
+// C99 __func__ macro
+#if (__STDC_VERSION__ >= 199901L)
+#elif defined(__SUNPRO_C) && defined(__C99FEATURES__)
+#elif defined(__clang__) // clang-cl defines __func__
+#elif (__GNUC__+0) >= 2 || (_MSC_VER+0) >= 1300
+#  define __func__ __FUNCTION__
+#else
+#  define __func__ "<unknown>"
 #endif
 
 #if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1900 // 1910 in gsl, partially support constexpr in vs2015
