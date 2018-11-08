@@ -10,6 +10,29 @@
 #include <utility>
 
 CPPCOMPAT_NS_STD_BEGIN
+#if CPP_EMU_STD(14)
+template <class _Tp, bool = is_enum<_Tp>::value>
+struct  __enum_hash : public unary_function<_Tp, size_t>
+{
+    size_t operator()(_Tp __v) const noexcept
+    {
+        typedef typename underlying_type<_Tp>::type type;
+        return hash<type>{}(static_cast<type>(__v));
+    }
+};
+template <class _Tp>
+struct  __enum_hash<_Tp, false> {
+    __enum_hash() = delete;
+    __enum_hash(__enum_hash const&) = delete;
+    __enum_hash& operator=(__enum_hash const&) = delete;
+};
+
+template <class _Tp>
+struct hash : public __enum_hash<_Tp>
+{
+};
+#endif // CPP_EMU_STD(14)
+
 #if CPP_EMU_STD(17)
 template <class T>
 constexpr add_const_t<T>& as_const(T& t) noexcept { return t; }
