@@ -9,9 +9,10 @@
 #include "type_traits.hpp"
 #include <utility>
 
+CPPCOMPAT_NS_STD_BEGIN
 #if CPP_EMU_STD(17)
-namespace std {
 template <class T>
 constexpr add_const_t<T>& as_const(T& t) noexcept { return t; }
-} // namespace std
 #endif // CPP_EMU_STD(17)
+//} // namespace std
+CPPCOMPAT_NS_STD_END

@@ -9,7 +9,7 @@
 #include <type_traits>
 
 #if CPP_EMU_STD(14)
-namespace std {
+CPPCOMPAT_NS_STD_BEGIN
 // const-volatile modifications:
 template<typename T>
 using remove_const_t = typename remove_const<T>::type;
@@ -67,12 +67,12 @@ using underlying_type_t = typename underlying_type<T>::type;
 template<typename T>
 using result_of_t = typename result_of<T>::type;
 //template<typename Fn, class... ArgTypes> using invoke_result_t = typename invoke_result<Fn, ArgTypes...>::type
-} // namespace std
+CPPCOMPAT_NS_STD_END
 #endif //CPP_EMU_STD(14)
 
 
 #if CPP_EMU_STD(17)
-namespace std {
+CPPCOMPAT_NS_STD_BEGIN
 # if (__GNUC__+0) < 5 && !defined __clang__
 // http://stackoverflow.com/a/28967049/1353549
 template <typename...>
@@ -83,11 +83,11 @@ using void_t = typename make_void<Ts...>::type;
 template <typename...>
 using void_t = void;
 # endif
-} // namespace std
+CPPCOMPAT_NS_STD_END
 #endif // CPP_EMU_STD(17)
 
 #if CPP_EMU_STD_IN(17, 14) // variable templates requires C++14. inline variables require c++17 which we are emulating, so no inline
-namespace std {
+CPPCOMPAT_NS_STD_BEGIN
 // See C++14 20.10.4.1, primary type categories
 template<typename T>
 constexpr bool is_void_v = is_void<T>::value;
@@ -200,16 +200,16 @@ template<class B> struct negation
 template<class B>
 constexpr bool negation_v = negation<B>::value;
 #endif
-} // namespace std
+CPPCOMPAT_NS_STD_END
 #endif // CPP_EMU_STD_IN(17, 14)
 
 #if CPP_EMU_STD(20)
-namespace std {
+CPPCOMPAT_NS_STD_BEGIN
 template<typename T>
 struct remove_cvref {
     typedef remove_cv_t<remove_reference_t<T>> type;
 };
 template<typename T>
 using remove_cvref_t = typename remove_cvref<T>::type;
-}
+CPPCOMPAT_NS_STD_END
 #endif // CPP_EMU_STD(20)

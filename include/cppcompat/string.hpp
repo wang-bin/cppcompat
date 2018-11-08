@@ -38,7 +38,7 @@ struct cast_to<std::string> {
     static std::string from(const std::string& x) { return x;}
 };
 
-namespace std {
+CPPCOMPAT_NS_STD_BEGIN
 template<typename T>
 inline string to_string(T t) {
     return cast_to<std::string>::from(t);
@@ -51,6 +51,6 @@ static inline int stoi(const std::string& str, std::size_t* pos = nullptr, int b
         *pos = s_end - str.c_str();
     return v;
 }
-} //namespace std
+CPPCOMPAT_NS_STD_END
 #endif // !defined(__clang__) && !defined(_GLIBCXX_USE_C99)
 #endif //defined(__ANDROID__) || defined(ANDROID)

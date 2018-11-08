@@ -104,3 +104,19 @@
 #ifdef _MSC_VER // check vcrt version instead of _MSC_VER, because stl is defined in crt, and clang supports different combinations of msc version + crt
 # include <crtversion.h>
 #endif
+
+#include <cstdbool> // to include yvals.h(vc), __config(libc++), bits/c++config.h(gnu) to get defination of std namespace
+#if defined(_LIBCPP_END_NAMESPACE_STD) // libc++, already defined as inline namespace
+#define CPPCOMPAT_NS_STD_BEGIN _LIBCPP_BEGIN_NAMESPACE_STD
+#define CPPCOMPAT_NS_STD_END _LIBCPP_END_NAMESPACE_STD
+#elif defined(_GLIBCXX_BEGIN_NAMESPACE_VERSION) // gnu stl, inline namespace declaration in c++config.h
+#define CPPCOMPAT_NS_STD_BEGIN namespace std { _GLIBCXX_BEGIN_NAMESPACE_VERSION
+#define CPPCOMPAT_NS_STD_END _GLIBCXX_END_NAMESPACE_VERSION }
+#elif defined(_STD_BEGIN) // vc
+#define CPPCOMPAT_NS_STD_BEGIN _STD_BEGIN
+#define CPPCOMPAT_NS_STD_END _STD_END
+#else
+#define CPPCOMPAT_NS_STD_BEGIN namespace std {
+#define CPPCOMPAT_NS_STD_END }
+#endif
+

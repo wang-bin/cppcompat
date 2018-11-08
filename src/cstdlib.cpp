@@ -9,7 +9,7 @@
 #include <windows.h>
 #include <memory>
 #include <unordered_map>
-namespace std {
+CPPCOMPAT_NS_STD_BEGIN
 char* getenv(const char* env_var) {
     DWORD len = GetEnvironmentVariableA(env_var, nullptr, 0); // length including terminating '\0'
     if (len <= 0) // == 0
@@ -20,5 +20,5 @@ char* getenv(const char* env_var) {
     envs[env_var] = val; // old value memory is destroyed
     return val.get();
 }
-} // namespace std
+CPPCOMPAT_NS_STD_END
 #endif // CPP_COMPAT_WINRT
