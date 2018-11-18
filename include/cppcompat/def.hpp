@@ -9,7 +9,7 @@
 #ifndef CPP_COMPAT_STD
 # define CPP_COMPAT_STD 20
 #endif
-// use CPP_IS_STD instead of __cplusplus because __cplusplus is always 199711 in vc
+// use CPP_IS_STD instead of __cplusplus because __cplusplus is always 199711 in vc (vs15.7+ can fix it by /Zc:__cplusplus)
 #if __cplusplus >= 201707L
 # define CPP_IS_STD 20
 #elif __cplusplus >= 201703L
@@ -20,7 +20,9 @@
 # define CPP_IS_STD 11
 #else
 // vc140(vs2015) defines _HAVE_CXX17 (_MSVC_LANG>201402) in yvals.h. _MSVC_LANG is defined since cl 19.00(what about clang/clang-cl? added in e71aa18)
-# if (_MSVC_LANG+0) > 201402L // -std:c++17: 201703, -std:c++latest: 201704
+# if (_MSVC_LANG+0) > 201703L
+#   define CPP_IS_STD 20
+# elif (_MSVC_LANG+0) > 201402L // -std:c++17: 201703, -std:c++latest: 201704
 #   define CPP_IS_STD 17
 # elif (_MSVC_LANG+0) >= 201402L // since vs2015update3  -std:c++14: 201402
 #   define CPP_IS_STD 14

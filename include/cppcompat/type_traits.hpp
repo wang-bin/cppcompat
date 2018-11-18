@@ -88,6 +88,10 @@ CPPCOMPAT_NS_STD_END
 
 #if CPP_EMU_STD_IN(17, 14) // variable templates requires C++14. inline variables require c++17 which we are emulating, so no inline
 CPPCOMPAT_NS_STD_BEGIN
+# if !defined(__cpp_lib_type_trait_variable_templates)/*vc*/ && !defined(__cpp_variable_templates) /*clang,gnu*/
+#  define CPPCOMPAT_VAR_TMPL 1
+# endif
+#if (CPPCOMPAT_VAR_TMPL+0)
 // See C++14 20.10.4.1, primary type categories
 template<typename T>
 constexpr bool is_void_v = is_void<T>::value;
@@ -200,6 +204,7 @@ template<class B> struct negation
 template<class B>
 constexpr bool negation_v = negation<B>::value;
 #endif
+# endif // (CPPCOMPAT_VAR_TMPL+0)
 CPPCOMPAT_NS_STD_END
 #endif // CPP_EMU_STD_IN(17, 14)
 
