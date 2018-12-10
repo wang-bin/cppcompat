@@ -70,9 +70,9 @@ using result_of_t = typename result_of<T>::type;
 CPPCOMPAT_NS_STD_END
 #endif //CPP_EMU_STD(14)
 
-
 #if CPP_EMU_STD(17)
 CPPCOMPAT_NS_STD_BEGIN
+#if !(__cpp_lib_void_t+0) // 201411. implemented in vcrt(14.??) unconditionally
 # if (__GNUC__+0) < 5 && !defined __clang__
 // http://stackoverflow.com/a/28967049/1353549
 template <typename...>
@@ -83,6 +83,7 @@ using void_t = typename make_void<Ts...>::type;
 template <typename...>
 using void_t = void;
 # endif
+#endif // !(__cpp_lib_void_t+0)
 CPPCOMPAT_NS_STD_END
 #endif // CPP_EMU_STD(17)
 
