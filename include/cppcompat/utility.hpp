@@ -1,6 +1,6 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2019 WangBin <wbsecg1 at gmail.com>
  * https://github.com/wang-bin/cppcompat
  * MIT License
  */
@@ -34,8 +34,11 @@ struct hash : public __enum_hash<_Tp>
 #endif // CPP_EMU_STD(14)
 
 #if CPP_EMU_STD(17)
+# if !defined(_VC_CRT_MAJOR_VERSION) || (_VC_CRT_MAJOR_VERSION < 14)
+// implemented in vcrt 140 unconditionally
 template <class T>
 constexpr add_const_t<T>& as_const(T& t) noexcept { return t; }
+# endif
 #endif // CPP_EMU_STD(17)
 //} // namespace std
 CPPCOMPAT_NS_STD_END
