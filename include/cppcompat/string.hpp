@@ -1,6 +1,6 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2019 WangBin <wbsecg1 at gmail.com>
  * https://github.com/wang-bin/cppcompat
  * MIT License
  */
@@ -9,7 +9,7 @@
 #include <cstdlib> // strtol
 #include <string>
 
-#if defined(__ANDROID__) || defined(ANDROID)
+#if defined(__BIONIC__)
 #if defined(_GLIBCXX_STRING) && !defined(_GLIBCXX_USE_C99)
 #include <sstream>
 template<typename To> struct cast_to {
@@ -53,4 +53,4 @@ static inline int stoi(const std::string& str, std::size_t* pos = nullptr, int b
 }
 CPPCOMPAT_NS_STD_END
 #endif // !defined(__clang__) && !defined(_GLIBCXX_USE_C99)
-#endif //defined(__ANDROID__) || defined(ANDROID)
+#endif //defined(__BIONIC__)
