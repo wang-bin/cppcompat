@@ -107,7 +107,11 @@
 # include <crtversion.h>
 #endif
 
-#include <cstdbool> // to include yvals.h(vc), __config(libc++), bits/c++config.h(gnu) to get defination of std namespace
+#if (__GNUC__+0) && !defined(__clang__)
+#include <bits/c++config.h> // included in gcc6.1+ ciso646. https://en.cppreference.com/w/cpp/header/ciso646
+#else
+#include <ciso646> // to include yvals.h(vc), __config(libc++), bits/c++config.h(gnu) to get defination of std namespace. cstdbool is deprecated in c++17
+#endif
 #if defined(_LIBCPP_END_NAMESPACE_STD) // libc++, already defined as inline namespace
 #define CPPCOMPAT_NS_STD_BEGIN _LIBCPP_BEGIN_NAMESPACE_STD
 #define CPPCOMPAT_NS_STD_END _LIBCPP_END_NAMESPACE_STD
