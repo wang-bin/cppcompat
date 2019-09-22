@@ -1,10 +1,22 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2019 WangBin <wbsecg1 at gmail.com>
  * https://github.com/wang-bin/cppcompat
  * MIT License
  */
 #pragma once
+
+// c++20 <version>(libc++, msvc only now) // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0754r2.pdf
+#if defined(__has_include)/*c++17*/ && __has_include(<version>)
+# include <version>
+#else
+# if (__GNUC__+0) && !defined(__clang__)
+#   include <bits/c++config.h> // included in gcc6.1+ ciso646. https://en.cppreference.com/w/cpp/header/ciso646
+# else
+#   include <ciso646> // to include yvals.h(vc), __config(libc++), bits/c++config.h(gnu) to get defination of std namespace. cstdbool is deprecated in c++17
+# endif
+#endif
+
 // CPP_COMPAT_STD: set by user to control which std is compatible with
 #ifndef CPP_COMPAT_STD
 # define CPP_COMPAT_STD 20
@@ -40,7 +52,7 @@
 #define CPP_EMU_STD_IN(X, Y) ((CPP_IS_STD < X && CPP_IS_STD >= Y) && (CPP_COMPAT_STD >= X))
 
 // macros, pp, keywords
-// TODO: define __cpp_xxx(mostly for vc), e.g. __cpp_constexpr
+// TODO: define __cpp_xxx(mostly for vc), e.g. __cpp_constexpr. move into version.hpp
 /*
 #define __cpp_alias_templates 200704
 #define __cpp_attributes 200809
@@ -107,11 +119,7 @@
 # include <crtversion.h>
 #endif
 
-#if (__GNUC__+0) && !defined(__clang__)
-#include <bits/c++config.h> // included in gcc6.1+ ciso646. https://en.cppreference.com/w/cpp/header/ciso646
-#else
-#include <ciso646> // to include yvals.h(vc), __config(libc++), bits/c++config.h(gnu) to get defination of std namespace. cstdbool is deprecated in c++17
-#endif
+// namespace macros are defined <version>, <bits/c++config.h>yvals.h(vc), __config(libc++)
 #if defined(_LIBCPP_END_NAMESPACE_STD) // libc++, already defined as inline namespace
 #define CPPCOMPAT_NS_STD_BEGIN _LIBCPP_BEGIN_NAMESPACE_STD
 #define CPPCOMPAT_NS_STD_END _LIBCPP_END_NAMESPACE_STD
