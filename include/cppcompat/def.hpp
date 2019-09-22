@@ -7,9 +7,13 @@
 #pragma once
 
 // c++20 <version>(libc++, msvc only now) // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0754r2.pdf
-#if defined(__has_include)/*c++17*/ && __has_include(<version>)
-# include <version>
-#else
+#if defined(__has_include)/*c++17*/
+# if __has_include(<version>)
+#   include <version>
+#   define CPP_HAS_VERSION 1
+# endif
+#endif
+#if !(CPP_HAS_VERSION+0)
 # if (__GNUC__+0) && !defined(__clang__)
 #   include <bits/c++config.h> // included in gcc6.1+ ciso646. https://en.cppreference.com/w/cpp/header/ciso646
 # else
