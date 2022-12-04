@@ -1,11 +1,11 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017-2018 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2022 WangBin <wbsecg1 at gmail.com>
  * MIT License
  */
 #include "cppcompat/cstdlib.hpp"
 
-#ifdef CPP_COMPAT_WINRT
+#if defined(CPP_COMPAT_WINRT) && !defined(WINRT_HAS_GETENV)
 #include <windows.h>
 #include <memory>
 #include <unordered_map>
@@ -21,4 +21,4 @@ char* getenv(const char* env_var) {
     return val.get();
 }
 CPPCOMPAT_NS_STD_END
-#endif // CPP_COMPAT_WINRT
+#endif // defined(CPP_COMPAT_WINRT) && !defined(WINRT_HAS_GETENV)
