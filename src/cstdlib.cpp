@@ -1,11 +1,10 @@
 /*
  * std c++ compat layer
- * Copyright (c) 2017-2022 WangBin <wbsecg1 at gmail.com>
+ * Copyright (c) 2017-2023 WangBin <wbsecg1 at gmail.com>
  * MIT License
  */
 #include "cppcompat/cstdlib.hpp"
-
-#if defined(CPP_COMPAT_WINRT) && !defined(WINRT_HAS_GETENV)
+#if defined(CPP_COMPAT_WINRT) && !(CRT_HAS_GETENV_ + 0) // impl in ucrt will be selected if available
 #include <windows.h>
 #include <memory>
 #include <unordered_map>
@@ -21,4 +20,4 @@ char* getenv(const char* env_var) {
     return val.get();
 }
 CPPCOMPAT_NS_STD_END
-#endif // defined(CPP_COMPAT_WINRT) && !defined(WINRT_HAS_GETENV)
+#endif // defined(CPP_COMPAT_WINRT) && !(CRT_HAS_GETENV_ + 0)
