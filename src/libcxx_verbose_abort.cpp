@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <cstdarg>
 #include <cstdio>
+#include <cstdlib>
 //#include <version> // must include any libc++ header before defining the function (C compatibility headers excluded)
 // no side effect if not building for libc++
 #if !defined(_LIBCPP_HAS_NO_VERBOSE_ABORT_IN_LIBRARY) /*libc++17*/ \
