@@ -17,7 +17,8 @@
 #endif
 
 #ifdef CPPCOMPAT_VERBOSE_ABORT
-void std::__libcpp_verbose_abort(char const* format, ...) {
+// noexcept since libc++20
+void std::__libcpp_verbose_abort(char const* format, ...) noexcept(noexcept(std::__libcpp_verbose_abort(""))) {
     va_list list;
     va_start(list, format);
     std::vfprintf(stderr, format, list);
