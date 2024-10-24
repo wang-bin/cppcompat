@@ -8,8 +8,17 @@ option(CPPCOMPAT_LIBCXX_MIN "min compatible libc++ version" 3)
 if(CPPCOMPAT_LIBCXX_MIN)
   add_definitions(-DCPPCOMPAT_LIBCXX_MIN=${CPPCOMPAT_LIBCXX_MIN})
 endif()
+include_directories(include)
 add_library(${PROJECT_NAME} STATIC
     src/cstdlib.cpp
     src/libcxx_verbose_abort.cpp
     src/libcxx_iostream_instantiations.cpp
     )
+
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} # *.dll
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  )
+install(EXPORT ${PROJECT_NAME} DESTINATION lib/cmake)
