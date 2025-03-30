@@ -13,6 +13,7 @@ add_library(${PROJECT_NAME} STATIC
     src/cstdlib.cpp
     src/libcxx_verbose_abort.cpp
     src/libcxx_iostream_instantiations.cpp
+    src/libcxx_functional.cpp
     )
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
@@ -22,3 +23,5 @@ install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
   FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
 install(EXPORT ${PROJECT_NAME} DESTINATION lib/cmake)
+
+# can merge libcppcompat.a built with libstdc++ and libc++, only inline std namespace symbols
